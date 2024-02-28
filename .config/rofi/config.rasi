@@ -1,0 +1,24 @@
+//@theme "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"
+//@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
+
+configuration {
+    display-drun: "Applications";
+    display-calc: "";
+    drun-display-format: "{name}";
+    font: "JetBrainsMono Medium 14";
+    modi: "drun,emoji,calc";
+    drun-commands: "/usr/share/applications:~/.local/share/applications";
+}
+//@theme "/usr/share/rofi/themes/dmenu.rasi"
+//@theme "/usr/share/rofi/themes/sidebar.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+//@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+//@theme "/usr/share/rofi/themes/Monokai.rasi"
+//@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+//@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-common.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-light-hard.rasi"
+//@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+@theme "/usr/share/rofi/themes/Monokai.rasi"

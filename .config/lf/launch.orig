@@ -1,0 +1,24 @@
+#!/bin/sh
+
+case $(file --mime-type "$@" -bL) in
+   text/* | application/json | application/xml | application/x-shellscript | application/javascript )
+      # Open text files, scripts, JSON, and XML directly with nvim
+      nvim "$@"
+      ;;
+   video/* | audio/* | image/gif)
+      # Launch videos, audios, and GIFs with mpv
+      #devour mpv "$@"
+      devour mpv --force-window=immediate "$@"
+      ;;
+   image/jpeg | image/png | image/jpg | image/webp | image/tiff | image/svg+xml)
+      # Open JPEG and PNG images with feh
+      nsxiv "$@"
+      ;;
+   application/pdf | application/postscript)
+      # Open PDFs and PostScript files with zathura
+      devour zathura "$@"
+      ;;
+   *) # For all other file types, use devour with mimeopen
+      mimeopen "$@" ;;
+esac
+

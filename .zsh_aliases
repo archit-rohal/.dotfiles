@@ -1,0 +1,221 @@
+#Copied from .bashrc - 
+##pp is modified to work with zsh - 
+#alias v='play_youtube() { mpv "$(xclip -o)" & disown; }; play_youtube && exit'
+## play_youtube() {
+## mpv "$(xclip -o)" & disown
+## }
+#play_youtube() {
+#mpv "$(yt-dlp -g "$(xclip -o)")" & disown
+#}
+#alias v='play_youtube'
+alias v='mpv $(xclip -o) & disown; exit'
+
+
+alias ls='ls -hNF --group-directories-first --color=auto'
+alias ll='ls -lahNFA --color=auto'
+alias grep='grep --color=auto'
+alias ec="nvim $HOME/.zshrc" # edit .zshrc
+alias sc="source /home/mark/.zshrc"  # reload zsh configuration
+alias of='exit'
+alias po="sudo apt-cache policy"
+alias sho="sudo apt-cache show"
+alias aps="sudo apt-cache search"
+alias clean="sudo apt autoclean"
+alias arm="sudo apt autoremove"
+alias ilist="apt list --installed 2>/dev/null | grep"
+alias lg="ll | grep"
+alias upe="sudo apt update && sudo apt upgrade && flatpak upgrade"
+alias upa="sudo apt update"
+alias mem="free -mh"
+alias bp="bpytop"
+#alias ru="ps aux | peco"
+#alias kl="fkill"
+alias tb="nc termbin.com 9999"
+alias e="exa --all --long --header --icons --group-directories-first"
+alias es="exa --sort=size --long --all --header --icons"
+alias et="exa --sort=modified --long --all --header --icons"
+alias ed="exa --long -D --all --header --icons"
+alias ds="du -sh"
+#alias lsdd='lsd -dltr */'
+#alias lsr="ls -altr"
+alias cl="clear"
+#alias cht="cht.sh"
+## alias sob ="source $HOME/.zshrc"
+#sob() {
+#    source ~/.zshrc
+#    }
+alias upg="apt list --upgradable"
+alias rmf="sudo rm -vf"
+alias rmrf="sudo rm -vrf"
+alias sv="sudo nvim"
+alias H="cd -"
+alias h="cd .."
+alias cll="clear && ll"
+#    alias fan="watch -n 1 sensors"
+#    alias mkd="mkdir -pv"
+alias mkf="touch"
+#    alias i='vifm .'
+#    alias r='qrencode -t PNG -s 8 -o /tmp/qr.png "$(xclip -o -selection clipboard)" && qimgv /tmp/qr.png && rm /tmp/qr.png'
+#    alias f="showinfilemanager "
+alias wo='shuf -n 10 /usr/share/dict/american-english'
+alias pid="ps axww -o pid,user,%cpu,%mem,start,time,command | fzf | sed 's/^ *//' | cut -f1 -d' '"
+#    alias j.='for f in $(find . -maxdepth 1 -type d | fzf); do cd "$f"; done'
+#    alias f.='find . -maxdepth 1 -type f | fzf | xargs -I{} xdg-open "{}"'
+#    #alias fa="fzf --preview 'xdg-open {}' --bind 'enter:execute(xdg-open {})+abort' --preview-window=right:3:hidden && exit"
+#    #alias fa='FILE="$(find ~/ -type f -print0 | fzf --preview "bat --color=always {}" --preview-window=right:60%:wrap --read0)"; cd "$(dirname "$FILE")" && xdg-open "$FILE"'
+#    alias fa='cd "$(find ~/ -type f -print0 | fzf --preview "bat --color=always {}" --preview-window=right:60%:wrap --read0 | xargs -0 dirname)"'
+#
+#    alias ja='cd "$(find / -type d -print 2>/dev/null | fzf --preview '\''ls {}'\'')"'
+#    alias no="fzf --preview 'nvim -c \"set previewheight=2 | set syntax=on\" {}' --bind 'enter:execute(nvim {})+abort' --preview-window=right:3:hidden"
+#    alias gmail="google-chrome https://mail.google.com/; exit"
+#    alias gn="function _hr(){ search_term=\$(echo \$@ | tr ' ' '+'); brave-browser 'https://www.google.com/search?q='\$search_term'+site:https://news.ycombinator.com/'; exit; };_hr"
+#    alias gr="function _hn(){ search_term=\$(echo \$@ | tr ' ' '+'); brave-browser 'https://www.google.com/search?q='\$search_term'+site:https://www.reddit.com/?q='; exit; };_hn"
+#    alias ga="function _hr(){ search_term=\$(echo \$@ | tr ' ' '+'); brave-browser 'https://www.google.com/search?q='\$search_term'+site:https://news.ycombinator.com+OR+site:https://www.reddit.com/'; exit; };_hr"
+#    alias gf="function _hr(){ search_term=\$(echo \$@ | tr ' ' '+'); brave-browser 'https://www.google.com/search?q='\$search_term'+site:https://www.freecodecamp.org/+OR+site:https://dev.to/+OR+site:https://medium.com/'; exit; };_hr"
+#    alias gof="function _hr(){ search_term=\$(echo \$@ | tr ' ' '+'); brave-browser 'https://www.google.com/search?q='\$search_term'+site:https://www.freecodecamp.org/'; exit; };_hr"
+#    alias createjsx='touch One.jsx Two.jsx Three.jsx Four.jsx Five.jsx Six.jsx Seven.jsx Eight.jsx Nine.jsx Ten.jsx Eleven.jsx Twelve.jsx Thirteen.jsx Fourteen.jsx Fifteen.jsx'
+#    alias rea='npm create vite@latest vite-project && cd vite-project && rm -rf public/ && npm i && cd src && rm -rf assets/ && echo "" > App.jsx && echo "const App = () => {" >> App.jsx && echo " return (" >> App.jsx && echo " <div>App</div>" >> App.jsx && echo " )" >> App.jsx && echo "}" >> App.jsx && echo "" >> App.jsx && echo "export default App" >> App.jsx && echo "" > index.css && echo "" > App.css && nvim App.jsx'
+#    alias live='npm run dev'
+#    alias rgo='read -p "Enter search term: " SEARCH_TERM && rg --files-with-matches "$SEARCH_TERM" 2>/dev/null | fzf --preview "nvim +/{q} {}" --preview-window=:wrap --bind "enter:execute(nvim +/{q} {}),ctrl-g:abort"'
+#    alias rgimp='rg --files-with-matches "123imp" 2>/dev/null | fzf --preview "nvim +/{q} {}" --preview-window=:wrap --bind "enter:execute(nvim +/{q} {}),ctrl-g:abort"'
+#    alias bimages='~/bimages.sh'
+#    alias foob='~/bima.sh'
+#    alias d='cd /home/archit/Downloads/'
+alias ali='nvim ~/.zsh_aliases'
+alias sali='sudo nvim ~/.zsh_aliases'
+#    alias ll='ls -alF'
+#    alias la='ls -A'
+#    alias lcf='ls -CF'
+#
+#    #git related - 
+#    alias g="git"
+#    alias gks="git status"
+#    alias gadd="git add ."
+#
+#    # The 'u' flag along with '--delete-after' used below is the most important flag; read about it;
+#    # when I move files from one dir to another these two flags sync those changes - 
+#    # ('h' and 'P' just show progress in human readable format)
+#    alias gupdate="sudo rsync -ruvhP --delete-after --exclude='.git' --info=progress2 ~/obsidian-vault/ ~/Downloads/git-obsidian-vault/ && cd ~/Downloads/git-obsidian-vault && git add . && git commit -m 'docs: update' && git push origin"
+#
+#    alias dupdate='sudo rsync -ruvhP  /etc/vim/vimrc ~/repos/dotfiles/vimrc_etc_vim_ && 
+#        sudo rsync -ruvhP ~/.vimrc ~/.bash_aliases ~/.bashrc ~/repos/dotfiles/ && 
+#            sudo rsync -ruvhP --delete-after ~/.config/mpv/ ~/repos/dotfiles/dot_config_mpv/ && 
+#                sudo rsync -ruvhP --delete-after ~/shell_scripts ~/repos/dotfiles/ &&
+#                    sudo rsync -ruvhP --delete-after /etc/mpv/ ~/repos/dotfiles/etc_mpv/ && 
+#                        sudo rsync -ruvhP ~/.config/vifm/vifmrc ~/repos/dotfiles/ && 
+#                            sudo rsync -ruvhP ~/.ideavimrc ~/repos/dotfiles/ &&
+#                                sudo rsync -avhP --delete --recursive --exclude='.git' --exclude='.gitignore' ~/.zshrc ~/.zsh_history ~/.zshrc_aliases ~/.p10k.zsh ~/.oh-my-zsh ~/repos/dotfiles/zsh/ &&
+#                                    sudo rsync -ravhP --delete --exclude='.git' --exclude='.gitignore' ~/.config/nvim/lua/ ~/repos/dotfiles/nvchad/ &&
+#                                        cd ~/repos/dotfiles && git add . && 
+#                                            git commit -m "docs: update" && 
+#                                                git push -u origin'
+#                                                alias sr="~/shell_scripts/safely_remove.sh"
+#                                                alias qi="qimgv"
+#                                                alias c='~/shell_scripts/bluetooth_script.sh; exit'
+alias dfh='df -H'
+#                                                alias cat='lolcat'
+#                                                alias zsh='nvim /home/archit/.zshrc'
+#                                                alias szsh='sudo nvim /home/archit/.zshrc'
+#                                                alias shos='~/shell_scripts/app_size.sh'
+alias kl='~/.config/shell_scripts/fzfkill.sh'
+#                                                # alias o='/home/archit/shell_scripts/rdrview_nvim.sh'
+alias o='rdrview "$(xclip -o)" | nvim -'
+#                                                alias s='cd /home/archit/Downloads/softwares/'
+alias j='z'
+#                                                alias cp='cp -iv'
+alias sud='sudo updatedb; echo "database updated successfully!"'
+alias tp='trash-put'
+alias te='trash-empty'
+# alias zathura="zathura --bar=none"
+alias sdn='sudo shutdown now'
+#                                                alias grep='grep --color=auto'
+alias in='sudo apt install'
+#                                                alias spd='speedometer -r wlp2s0'
+alias cam='mpv /dev/video0 --no-border'
+alias removenvim='rmrf ~/.config/nvim/ ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/'
+alias ms='~/.config/shell_scripts/rename_screenshot.sh; cd ~/Pictures/Screenshots/'
+#                                                alias getout='gnome-session-quit --no-prompt'
+#alias ws='nohup webstorm &> /dev/null &'
+
+#------new additions--------
+alias myip='curl ifconfig.me'
+alias purge='sudo apt purge'
+alias d='cd ~/Downloads'
+#alias sv='sudo nvim -u ~/.config/nvim/init.vim' ----not needed coz I created system-wide neovim config file at /root/.config/nvim/init.vim
+alias cn='sudo nvim ~/.config/nvim/init.vim'
+alias ocd="sudo nvim ~/.config/suckless/dwm-6.4/config.def.h"
+alias dcd='sudo rm ~/.config/suckless/dwm-6.4/config.h && cd ~/.config/suckless/dwm-6.4/ && sudo make clean install'
+alias oct="sudo nvim ~/.config/suckless/st/config.h"
+alias dct='sudo rm ~/.config/suckless/st/config.h && cd ~/.config/suckless/st/ && sudo make clean install'
+alias ocs='sudo nvim ~/.config/suckless/slstatus-1.0/config.def.h'
+alias dcs='sudo rm ~/.config/suckless/slstatus-1.0/config.h && cd ~/.config/suckless/slstatus-1.0/ && sudo make clean install'
+alias cal='speedcrunch'
+alias bat='batcat'
+alias f='thunar .'
+alias oh='sudo !!'
+alias telegram='flatpak run org.telegram.desktop'
+alias qi='qimgv'
+alias wone='sudo nmcli connection up uuid 98133041-499f-4fc1-83b5-a37b94cabbec'
+alias wtwo='sudo nmcli connection up uuid e84859d3-021a-4751-bd0e-577528419a6e'
+alias wshow='nmcli connection'
+alias net='ping -c 5 gnu.org'
+alias wpoco='nmcli --ask device wifi connect POCO\ X3\ Pro'
+alias wshowdevice='nmcli device wifi'
+alias lb='lsblk'
+alias reboot='sudo reboot'
+alias dpkgl='sudo dpkg -l | grep'
+alias ajar="sudo dtrx"
+alias mimed='mimeopen -d'
+alias mkd='mkdir'
+alias pim='pass insert -m'
+#alias node='unalias node ; unalias npm ; nvm use default ; node $@'
+#alias npm='unalias node ; unalias npm ; nvm use default ; npm $@'
+alias foo='nvim ~/bat/foo.js'
+alias load='xdg-open "$(locate "*" | fzf -e)"'
+alias t='tgpt'
+alias c='cd'
+#alias sfd='read -p "Enter directory name: " dirname; sudo find / -type d -iname "$dirname" 2>/dev/null'
+#alias sff='read "fname?Enter file name: "; sudo find / -type f -iname "$fname" 2>/dev/null'
+#alias sfd='read "dirname?Enter directory name: "; sudo find / -type d -iname "$dirname" 2>/dev/null'
+sff() {
+  sudo find / -type f -iname "$1" 2>/dev/null
+}
+sfd() {
+  sudo find / -type d -iname "$1" 2>/dev/null
+}
+alias m='curl dict://dict.org/d:'
+shos() {
+  size_bytes=$(sudo apt-cache show "$1" | grep '^Size:' | awk '{print $2}')
+  installed_size_kb=$(sudo apt-cache show "$1" | grep '^Installed-Size:' | awk '{print $2}')
+  is_installed=$(apt list --installed 2>/dev/null | grep "^$1/")
+  if [ -z "$size_bytes" ]; then
+    echo "Size not defined."
+  else
+    echo -n "Package Size: "
+    awk -v size="$size_bytes" 'BEGIN {
+      units[0]=" B"; units[1]=" KB"; units[2]=" MB"; units[3]=" GB"; units[4]=" TB";
+      for (u=0; size>1024 && u<4; u++) size/=1024;
+      printf "%.2f%s\n", size, units[u]
+    }'
+  fi
+  echo -n "Installed Size: "
+  awk -v size="$installed_size_kb" 'BEGIN {
+    size *= 1024;  # Convert KB to Bytes
+    units[0]=" B"; units[1]=" KB"; units[2]=" MB"; units[3]=" GB"; units[4]=" TB";
+    for (u=0; size>1024 && u<4; u++) size/=1024;
+    printf "%.2f%s\n", size, units[u]
+  }'
+  if [ -n "$is_installed" ]; then
+    echo "$1 is installed."
+  else
+    echo "$1 is not installed."
+  fi
+}
+alias fzf='fzf --cycle'
+alias diff='colordiff'
+alias zathura='zathura'
+alias mpv='mpv'
+alias im='nsxiv -bq'
+alias l='lf'
+alias ls='lfs'
+alias chown_mark='sudo chown -R mark:mark'

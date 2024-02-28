@@ -1,0 +1,362 @@
+# ██╗     ███████╗
+# ██║     ██╔════╝
+# ██║     █████╗
+# ██║     ██╔══╝
+# ███████╗██║
+# ╚══════╝╚═╝
+set ratios 1:2:3
+set scrolloff 10
+set hidden true
+set ignorecase true
+set icons
+set mouse
+set drawbox
+#set previewer '/home/mark/.config/lf/scope'
+set previewer '/home/mark/.config/lf/preview'
+set cleaner '/home/mark/.config/lf/cleaner'
+
+
+# set previewer ctpv
+# set cleaner ctpvclear
+# &ctpv -s $id
+# &ctpvquit $id
+
+set shellopts '-eu'
+set ifs "\n"
+set period 1 #refreshed directory every 1s (auto-reload)
+set autoquit true
+set promptfmt "\033[34;1m%d\033[0m\033[1m%f\033[0m"
+set shell zsh
+set sortby time
+set info size:time
+map R reload
+
+
+
+# define a custom 'rename' command without prompt for overwrite
+cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+map r push :rename<space>
+
+cmd mkdir ${{
+  printf "Directory Name: "
+  read ans
+  mkdir $ans
+}}
+map md mkdir
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  $EDITOR $ans
+}}
+map mf mkfile
+
+# define a custom 'delete' command
+cmd delete ${{
+    set -f
+    printf "$fx\n"
+    printf "delete?[y/n]"
+    read ans
+    [ "$ans" = "y" ] && rm -rf $fx
+}}
+
+map D delete
+
+# Archive bindings
+# cmd unarchive ${{
+#   case "$f" in
+#       *.zip) unzip "$f" ;;
+#       *.tar.gz) tar -xzvf "$f" ;;
+#       *.tar.bz2) tar -xjvf "$f" ;;
+#       *.tar) tar -xvf "$f" ;;
+#       *.tar.xz) tar -xvJf "$f" ;;
+#       *) echo "Unsupported format" ;;
+#   esac
+# }}
+cmd unarchive ${dtrx "$fx"}
+map au unarchive
+
+# Trash bindings
+cmd trash ${{
+  files=$(printf "$fx" | tr '\n' ';')
+  while [ "$files" ]; do
+    file=${files%%;*}
+
+    trash-put "$(basename "$file")"
+    if [ "$files" = "$file" ]; then
+      files=''
+    else
+      files="${files#*;}"
+    fi
+  done
+}}
+map dd trash
+
+cmd restore_trash ${{
+  trash-restore
+}}
+map dr restore_trash
+
+map de $trash-empty
+
+cmd toggle_preview %{{
+    if [ "$lf_preview" = "true" ]; then
+        lf -remote "send $id :set preview false; set ratios 1:5"
+    else
+        lf -remote "send $id :set preview true; set ratios 1:2:3"
+    fi
+}}
+
+map zp toggle_preview
+
+
+map d
+map m
+
+map <enter> shell
+map C clear
+map p paste
+map x cut
+map y copy
+map gd cd /home/mark/Downloads/
+map gr cd /home/mark/repos/
+map gl cd /home/mark/.config/lf/
+map gs cd /home/mark/.config/shell_scripts/
+map gt cd /home/mark/.local/share/Trash/files
+map ga cd /home/mark/.local/share/applications/
+map gc cd /home/mark/Downloads/courses/
+map gu cd /usr/local/bin/
+map gb cd /home/mark/bat/
+map gw make-executable /home/mark/.local/state/nvim/swap/
+map gh cd /home/mark/
+map gp cd /home/mark/obsidian-vault/transfer/
+map go cd /other_jazz/
+map gn cd /home/mark/.local/state/nvim/swap/
+map T cd /home/mark/temp/
+map g. cd /home/mark/.dotfiles/
+
+#  cmd fzf_jump ${{
+#      res="$(find . -maxdepth 1 | fzf-tmux -p --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+#      if [ -d "$res" ] ; then
+#          cmd="cd"
+#      elif [ -f "$res" ] ; then
+#          cmd="select"
+#      else
+#          exit 0
+#      fi
+#      lf -remote "send $id $cmd \"$res\""
+#  }}
+# map <c-f> :fzf_jump
+
+cmd fzf_jump ${{
+    res="$(find ${HOME} \( -type d -o -type f \) 2> /dev/null | fzf --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ] ; then
+        lf -remote "send $id cd \"$res\""
+    elif [ -f "$res" ] ; then
+        dir="$(dirname "$res")"
+        lf -remote "send $id cd \"$dir\""
+    else
+        exit 0
+    fi
+}}
+map <c-f> :fzf_jump
+
+
+# # execute current file (must be executable)
+# map x $$f
+# map X !$f
+
+# compress current file or selected files with zip
+cmd zip ${{
+     set -f
+     mkdir $1
+     cp -r $fx $1
+     zip -r $1.zip $1
+     rm -rf $1
+}}
+map <c-z> zip
+
+#map w $devour $ws "$f"
+#map w $devour zsh -c 'ws "$f"'
+
+cmd chmod ${{
+  printf "Mode Bits: "
+  read var
+
+  for file in "$fx"
+  do
+    if [ -d "$file" ]; then
+      chmod -R $var "$file"
+    else
+      chmod $var "$file"
+    fi
+  done
+
+  lf -remote 'send reload'
+}}
+map ap chmod
+
+
+cmd bulkrename $vidir
+
+cmd bulk-rename ${{
+	index=$(mktemp /tmp/lf-bulk-rename-index.XXXXXXXXXX)
+	if [ -n "${fs}" ]; then
+		echo "$fs" > $index
+	else
+		echo "$(ls "$(dirname $f)" | tr ' ' "\n")" > $index
+	fi
+	index_edit=$(mktemp /tmp/lf-bulk-rename.XXXXXXXXXX)
+	cat $index > $index_edit
+	$EDITOR $index_edit
+	if [ $(cat $index | wc -l) -eq $(cat $index_edit | wc -l) ]; then
+		max=$(($(cat $index | wc -l)+1))
+		counter=1
+		while [ $counter -le $max ]; do
+			a="$(cat $index | sed "${counter}q;d")"
+			b="$(cat $index_edit | sed "${counter}q;d")"
+			counter=$(($counter+1))
+			
+			[ "$a" = "$b" ] && continue
+			[ -e "$b" ] && echo "File exists: $b" && continue
+			mv "$a" "$b"
+		done
+	else
+		echo "Number of lines must stay the same"
+	fi
+	rm $index $index_edit
+}}
+
+map A bulk-rename
+
+#dedicated keys for file opener actions
+#map V $devour mimeopen $f
+map o $/home/mark/.config/lf/launch.sh $f
+#map o open $f
+map O $mimeopen --ask $f
+
+
+#cmd open ${{
+#    case $(file --mime-type "$f" -bL) in
+#        text/*|application/json) $EDITOR "$f";;
+#        application/pdf) devour zathura "$f";;
+#        image/*) devour qimgv "$f";;
+#        video/*) devour mpv "$f";;
+#        *) xdg-open "$f" ;;
+#    esac
+#}}
+#map o open
+
+cmd dragon-out %dragon-drop -a -x "$fx"
+cmd dragon-multiple %dragon-drop -a $fx
+cmd dragon-copy %dragoncopy
+cmd dragon-in %dragonmove
+
+map do dragon-out
+map dM dragon-multiple
+map dc dragon-copy
+map di dragon-in
+
+cmd du-size ${{
+    if [ -d "$f" ]; then
+        size=$(du -sh "$f" | awk '{print $1}')
+    else
+        size=$(ls -lh "$f" | awk '{print $5}')
+    fi
+    dunstify -t 1000 "Size" "$size"
+}}
+map du du-size
+
+
+cmd fzf_search ${{
+    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+    res="$(
+        FZF_DEFAULT_COMMAND="$RG_PREFIX ''" \
+            fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+            --ansi --layout=reverse --header 'Search in files' \
+            | cut -d':' -f1 | sed 's/\\/\\\\/g;s/"/\\"/g'
+    )"
+    [ -n "$res" ] && lf -remote "send $id select \"$res\""
+}}
+map gm :fzf_search
+
+#Copy file path to xclip (another command to copy absolute file path but doesn't show notification)
+#map Y $printf "%s" "$fx" | xclip -selection clipboard 
+
+cmd copy-path-and-notify %{{
+    (echo -n "$f" | xclip -selection clipboard; notify-send -t 2500 "LF" "<span font='13'>Path copied: $f</span>") >/dev/null 2>&1 &
+}}
+map Y copy-path-and-notify
+
+cmd send-to-obsidian-vault ${{
+    item="$f"
+    dest="/home/mark/obsidian-vault/transfer/"
+    itemName=$(basename "$item")
+
+    if [ -d "$item" ]; then
+        # If it's a directory, copy it recursively
+        cp -r "$item" "$dest"
+        dunstify -t 2000 "$itemName sent"
+    elif [ -f "$item" ]; then
+        # If it's a file, copy it directly
+        cp "$item" "$dest"
+        dunstify -t 2000 "$itemName sent"
+    else
+        echo "The item is neither a file nor a directory."
+    fi
+}}
+map at send-to-obsidian-vault (temp dir)
+
+# cmd setbg ${feh --bg-scale "$fx" && notify-send -t 1500 'Background applied!'}
+# map w setbg
+
+cmd setbg ${feh --bg-scale "$fx" && notify-send -t 1500 "$(identify -format '%wx%h' "$fx")" 'Background applied!'}
+map w setbg
+
+cmd open-image-in-sxiv ${nsxiv "$fx"}
+map as open-image-in-sxiv
+
+cmd make-executable ${cx "$fx"}
+map ax make-executable
+
+cmd remove-and-archive ${pack "$fx"}
+map ar remove-and-archive
+
+# cmd chown_mark !sudo chown -R mark:mark "$f"
+# map ao chown_mark
+
+cmd chown_mark_recursively !{{
+    sudo chown -R mark:mark "$f"
+    lf -remote "send $id reload"
+}}
+map aom chown_mark_recursively
+
+cmd chown_root_recursively !{{
+    sudo chown -R root:root "$f"
+    lf -remote "send $id reload"
+}}
+map aor chown_root_recursively
+
+cmd broot_jump ${{
+# f=$(mktemp)
+# res="$(broot --outcmd $f && cat $f | sed ‘s/cd //')"
+# rm -f "$f"
+# if [ -f "$res" ]; then
+#  cmd="select"
+# elif [ -d "$res" ]; then
+#  cmd="cd"
+# fi
+# lf -remote “send $id $cmd \"$res\""
+    f=$(mktemp)
+res="$(broot --outcmd "$f" && cat "$f" | sed 's/cd //')"
+rm -f "$f"
+if [ -f "$res" ]; then
+ cmd="select"
+elif [ -d "$res" ]; then
+ cmd="cd"
+fi
+lf -remote "send $id $cmd \"$res\""
+
+}}
+
+map ab broot_jump

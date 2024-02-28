@@ -1,0 +1,105 @@
+source ~/.vimrc
+
+let mapleader = " "
+inoremap jk <Esc>
+inoremap JK <Esc>
+set scrolloff=8
+set number
+set relativenumber
+set numberwidth=3
+nnoremap K <C-u>
+nnoremap J <C-d>
+"nnoremap E :q<CR>
+nnoremap E :action CloseEditor<CR>
+nnoremap <leader>w :w<CR>
+"nnoremap <leader>d :%d<CR>
+"nnoremap H gT
+"nnoremap L gt
+"map <C-l> :noh<CR> "For when highlightedyank is abnormally retained when IDE is launched
+nnoremap H :action PreviousTab<CR>
+nnoremap L :action NextTab<CR>
+set ideajump
+vnoremap <leader>u "+y
+nnoremap <leader>y "+y
+nnoremap <leader>Y gg"+yG
+Plug 'easymotion/vim-easymotion'
+set easymotion
+map <leader>S <Plug>(easymotion-s)
+map <leader>s <Plug>(easymotion-f)
+
+set history=1000
+set showmode
+set ideamarks
+set incsearch
+set sidescrolloff=5
+set visualbell
+set smartcase
+set showcmd
+nnoremap <leader>z :action ToggleDistractionFreeMode<CR>
+nnoremap <leader>/ :action FindInPath<CR>
+nnoremap <leader>n :action EditSourceInNewWindow<CR>
+"nnoremap <leader>l <C-Tab>
+nnoremap <leader>t :action Terminal.OpenInTerminal<CR>
+nnoremap <leader>f :action GotoFile<CR>
+set surround
+nnoremap <Leader>z :action ToggleZenMode<CR>
+nnoremap <Leader>v :action Vcs.QuickListPopupAction<CR>
+nnoremap <Leader>e :action ShowErrorDescription<CR>
+nnoremap <Leader>U :action ShowUsages<CR>
+nnoremap <Leader>F :action FindUsages<CR>
+nnoremap <Leader>D :action ShowUmlDiagram<CR>
+nnoremap <Leader>q :action ShowSettings<CR>
+nnoremap <leader>p :action SelectIn<CR>
+"nnoremap <Leader>p :action ShowFilePath<CR> "Shows popup to open the current file in OS file manager; this option is already present in SelectIn action hence commented out
+nnoremap <Leader>k :action RecentFiles<CR>
+nnoremap <leader>g :action Generate<CR>
+nnoremap <Leader>rl :action RecentLocations<CR>
+nnoremap <leader>vs :action SplitVertically <CR>
+nnoremap <leader>re :action Replace<CR>
+nnoremap <leader>; :action NewScratchFile <CR>
+nnoremap <leader>l :action NewElementSamePlace <CR>
+nmap zj o<ESC>k
+nmap zk O<ESC>j
+set highlightedyank
+set exchange
+"nnoremap <leader>w :action Switcher<CR>
+nnoremap <leader>a :action GotoAction<CR>
+nnoremap ;f :action ToggleFullScreen<CR>
+nnoremap <leader>ri :action RestartIde<CR>
+nnoremap <leader>j :action SearchEverywhere<CR>
+nnoremap <leader>w :action SaveAll<CR>
+nnoremap <leader>rc :action ReformatCode<CR>
+"nnoremap <leader>up :action IdeaVim.ReloadVimRc.reload<CR> There's already 'Ctrl-Shift-o' for it
+nnoremap <leader>up :action RenameElement<CR>
+nnoremap <leader>c :action TextComponent.ClearAction<CR>
+map g; <Action>(JumpToLastChange)
+map g, <Action>(JumpToNextChange)
+nnoremap <leader>o :action SurroundWith<CR>
+"nnoremap <leader> :action SafeDelete<CR>
+nnoremap <leader><Esc> :action HideActiveWindow<CR> "To close/hide terminal window below
+nnoremap <leader>uw :action Unwrap<CR>
+nnoremap <leader>L :action MoveTabRight<CR>
+nnoremap <leader>H :action MoveTabLeft<CR>
+nnoremap gc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR>
+nnoremap gb :action CommentByBlockComment<CR>
+vnoremap gb :action CommentByBlockComment<CR>
+"nnoremap <leader>J :action MoveStatementDown<CR>
+"nnoremap <leader>K :action MoveStatementUp<CR>
+nnoremap <leader>A :action SelectAllOccurrences<CR>
+"nnoremap ;q :action GoToTab1<CR>
+set multicursor
+map gi <A-n>
+map go <A-x>
+map gp <A-p>
+nnoremap F :action EditorCloneCaretBelow<CR>
+nnoremap R :action EditorCloneCaretAbove<CR>
+nnoremap ;n :action ShowNavBar<CR>
+nnoremap ;m :action OptimizeImports<CR>
+nnoremap gn :action GotoNextError<CR>
+nnoremap gr :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap ;i :action ShowIntentionActions<CR>
+nnoremap ;r :action Refactorings.QuickListPopupAction<CR>
+nnoremap R :action EditorPageUp<CR>
+nnoremap F :action EditorPageDown<CR>
+nnoremap <leader>rr :action Run<CR>
