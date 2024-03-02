@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 0;        /* 0 means no bar */
@@ -51,7 +51,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
-	//{ "><>",      NULL },//    /* no layout function means floating behavior */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
@@ -69,19 +69,12 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char scratchpadname[] = "scratchpad";
-/* static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL }; */
-/* static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", "-e", "lf", "/home/mark/temp", NULL }; */
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "190x47", "-e", "/usr/local/bin/chatgpt-chrome.sh", NULL };
-/* static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "190x47", "-e", "sh", "-c", "/usr/local/bin/chatgpt-chrome.sh 2>/dev/null", NULL }; */
-
 
 static const Key keys[] = {
 
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ ShiftMask,                    XK_space,  spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_s,      togglescratch,  {.v = scratchpadcmd } },
+	{ShiftMask,             	XK_space, spawn,           {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -90,12 +83,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_bracketleft,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_bracketright,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_a,       zoom,           {0} },
+	{ MODKEY,                       XK_a, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,             		XK_n,      killclient,     {0} },
-	/* { MODKEY,                       XK_s,      setlayout,      {.v = &layouts[0]} }, */
-	/* { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} }, */
-	/* { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} }, */
+	{ MODKEY,                       XK_s,      setlayout,      {.v = &layouts[0]} },
+	/*{ MODKEY,                       XK_w,      setlayout,      {.v = &layouts[1]} },*/
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -112,8 +106,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_e,                      5)
 	TAGKEYS(                        XK_r,                      6)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	/* { MODKEY, 			XK_semicolon, spawn, SHCMD("rofi -show drun") }, */
-	{ MODKEY, 			XK_semicolon, spawn, SHCMD("rofi -modi drun -show drun -line padding 4 -hide-scrollbar -show-icons 2>/dev/null") },
+	{ MODKEY, 			XK_semicolon, spawn, SHCMD("rofi -show drun") },
 	/*{ MODKEY,			XK_r, spawn, SHCMD("pamixer -i 5") },*/
 	/*{ MODKEY,			XK_q, spawn, SHCMD("pamixer -d 5") },*/
 	{ MODKEY,			XK_2, spawn, SHCMD("/home/mark/.config/shell_scripts/changevolume.sh up") },
@@ -125,7 +118,7 @@ static const Key keys[] = {
     { 0, XF86XK_MonBrightnessDown, spawn, SHCMD("brillo -q -U 10") },*/
     /*{ MODKEY|ShiftMask,             XK_w, spawn, SHCMD("/home/mark/.config/shell_scripts/rofi-wifi-menu/bash "./rofi-wifi-menu.sh"") },      */
     /*{ MODKEY|ShiftMask, XK_w, spawn, SHCMD("/home/mark/.config/shell_scripts/rofi-wifi-menu/bash \"./rofi-wifi-menu.sh\"") },*/
-    { MODKEY, XK_q, spawn, {.v = (char*[]){"/bin/zsh", "-c", "cd ~/.config/shell_scripts/rofi-wifi-menu/ && ./rofi-wifi-menu.sh", NULL}} },
+    { MODKEY, XK_q, spawn, {.v = (char*[]){"/bin/bash", "-c", "cd ~/.config/shell_scripts/rofi-wifi-menu/ && ./rofi-wifi-menu.sh", NULL}} },
     { MODKEY|ShiftMask, XK_g, spawn, SHCMD("rofi -show emoji") },
     { MODKEY|ShiftMask, XK_c, spawn, SHCMD("rofi -show calc -no-show-match -no-sort") },
     { MODKEY|ShiftMask, XK_l, spawn, SHCMD("st -- vim /home/mark/obsidian-vault/English/Phrases\\ and\\ Idioms.md") },
@@ -135,10 +128,10 @@ static const Key keys[] = {
     { MODKEY|ShiftMask, XK_slash, spawn, SHCMD("/home/mark/.config/shell_scripts/rofi_passScript.sh") },
     { MODKEY|ShiftMask, XK_n, spawn, SHCMD("st -- nvim /home/mark/obsidian-vault/") },
     { MODKEY|ControlMask, XK_bracketleft, spawn, SHCMD("/home/mark/.config/shell_scripts/startup_apps.sh")},
+    { MODKEY, XK_Page_Up, spawn, SHCMD("sudo systemctl restart ly.service") },
     { MODKEY|ControlMask, XK_equal,   spawn,          SHCMD("sudo brillo -q -A 5") },
     { MODKEY|ControlMask, XK_minus,   spawn,          SHCMD("sudo brillo -q -U 5") },
     { MODKEY,   XK_Pause,   spawn,      SHCMD("sudo systemctl restart ly.service")},
-    { MODKEY, XK_t, spawn, SHCMD("st -e /bin/zsh -c '/usr/local/bin/play_yt_clip'") },
 
 };
 

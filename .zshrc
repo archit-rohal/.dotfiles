@@ -5,6 +5,8 @@ export EDITOR=/usr/local/bin/nvim
 #To make mpv work when 'lf' is launched with 'sudo' (also added similar thing to sudoers)-
 export PULSE_SERVER="/run/user/$(id -u)/pulse/native"
 
+export TERMINAL=st
+
 #export DISPLAY=:0
 export BAT_THEME='gruvbox-dark'
 
