@@ -118,7 +118,7 @@ static const Key keys[] = {
 	/*{ MODKEY,			XK_q, spawn, SHCMD("pamixer -d 5") },*/
 	{ MODKEY,			XK_2, spawn, SHCMD("/home/mark/.config/shell_scripts/changevolume.sh up") },
 	{ MODKEY,			XK_1, spawn, SHCMD("/home/mark/.config/shell_scripts/changevolume.sh down") },
-	{ MODKEY, 			XK_l, spawn, SHCMD("xdg-open \"$(plocate / | rofi -threads 0 -width 100 -dmenu -i -p 'locate')\"") },
+	/*{ MODKEY, 			XK_l, spawn, SHCMD("xdg-open \"$(plocate / | rofi -threads 0 -width 100 -dmenu -i -p 'locate')\"") },*/
     { 0, XK_Print, spawn, SHCMD("maim --select | tee ~/Pictures/Screenshots/sc-$(date +'%d-%m-%Y-(%I:%M:%S%p)').png | xclip -selection clipboard -t image/png") },
     { 0, XK_Print, spawn, SHCMD("maim --select | tee ~/Pictures/Screenshots/sc-$(date +'%d-%m-%Y-(%I:%M:%S%p)').png | xclip -selection clipboard -t image/png") },
     /*{ 0, XF86XK_MonBrightnessUp, spawn, SHCMD("brillo -q -A 10") },
